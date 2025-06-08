@@ -3,7 +3,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { KafkaModule } from './kafka/kafka.module';
+import { KafkaService } from './kafka/kafka.service';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -29,9 +30,9 @@ import { KafkaModule } from './kafka/kafka.module';
         inject: [ConfigService],
       },
     ]),
-    KafkaModule,
+    CacheModule.register(),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, KafkaService],
 })
 export class AppModule {}
